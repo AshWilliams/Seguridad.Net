@@ -6,14 +6,16 @@
 <h2>TestXSS</h2>
 
 <div id="mensajeBienvenida"></div>
-<div id="mensajeBienvenida2">
-   
- </div>
+<div id="mensajeBienvenida2"></div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var mensaje = '@ViewBag.Nombre';
         $('#mensajeBienvenida').html('Bienvenido ' + mensaje);
+
+        mensaje = '@ViewBag.Clean';
+        $('#mensajeBienvenida2').html('Bienvenido ' + mensaje);
+
     });
 </script>
 

@@ -3,7 +3,6 @@
 using Microsoft.Security.Application;
 using System.Web.Mvc;
 
-
 namespace Seguridad.Net.Controllers
 {
 
@@ -15,7 +14,7 @@ namespace Seguridad.Net.Controllers
         public ActionResult TestXSS(string Nombre)
         {
             ViewBag.Nombre = Encoder.JavaScriptEncode(Nombre);
-            ViewBag.Insecure = Nombre;
+            ViewBag.Clean = Sanitizer.GetSafeHtmlFragment(Nombre.Replace("\\x3c", "<").Replace("\\x3e",">").Replace("\\x27","\""));
             
             return View();
         }
