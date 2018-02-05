@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "TestXSS";
+}
+
+<h2>TestXSS</h2>
+
+
+<div id="mensajeBienvenida"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var mensaje = '@ViewBag.Nombre';
+        $('#mensajeBienvenida').html('Bienvenido ' + mensaje);
+    });
+</script>
+

@@ -9,8 +9,10 @@ namespace Seguridad.Net.Controllers
     public class InsecureController : Controller
     {
         // GET: Insecure
-        public ActionResult Index()
+        //Ejemplo: http://localhost:62921/Insecure/TestXSS?Nombre=Robert%20Rozas%20\x3cscript\x3ealert(\x27doingSomethingNaughty\x27)\x3c/script\x3e
+        public ActionResult TestXSS(string Nombre)
         {
+            ViewBag.Nombre = Nombre;
             return View();
         }
     }
