@@ -18,5 +18,15 @@ namespace Seguridad.Net.Controllers
             
             return View();
         }
+
+        public ActionResult TestCSRF()
+        {
+            return View();
+        }
+
+        public ActionResult TestSQLInjection(FormCollection theForm)
+        {
+            return View();
+        }
     }
 }
