@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 
@@ -48,9 +48,27 @@ namespace Seguridad.Net.Controllers
             return View();
         }
 
-        public ContentResult Upload()
+        public ContentResult Upload(HttpPostedFileBase file)
         {
-            string datos = "";//JsonConvert.SerializeObject(dt, Formatting.Indented);
+            string datos = "";
+            Dictionary<string, string> dt = new Dictionary<string, string>();
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/UploadedFiles"),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    dt.Add("Mensaje", "File uploaded successfully");
+                }
+                catch (Exception ex)
+                {
+                    dt.Add("Mensaje", "ERROR:" + ex.Message.ToString());
+                }
+            else
+            {
+                dt.Add("Mensaje", "You have not specified a file.");
+            }
+            datos = JsonConvert.SerializeObject(dt, Formatting.Indented);
             return Content(datos, "application/json");
         }
     }

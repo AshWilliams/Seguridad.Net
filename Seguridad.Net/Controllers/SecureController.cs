@@ -2,9 +2,14 @@
 
 using Microsoft.Security.Application;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Seguridad.Net.Controllers
@@ -54,11 +59,58 @@ namespace Seguridad.Net.Controllers
             return View();
         }
 
-        public ContentResult Upload()
+        public ContentResult Upload(HttpPostedFileBase file)
         {
-            string datos = "";//JsonConvert.SerializeObject(dt, Formatting.Indented);
+            //Primero chequeamos el tipo mime correcto
+            byte[] document = new byte[file.ContentLength];
+            file.InputStream.Read(document, 0, file.ContentLength);
+            System.UInt32 mimetype;
+            FindMimeFromData(0, null, document, 256, null, 0, out mimetype, 0);
+            System.IntPtr mimeTypePtr = new IntPtr(mimetype);
+            string mime = Marshal.PtrToStringUni(mimeTypePtr);
+            Marshal.FreeCoTaskMem(mimeTypePtr);
+
+
+            string datos = "";
+            Dictionary<string, string> dt = new Dictionary<string, string>();
+
+            if(mime == "image/x-png" || mime == "image/pjpeg")
+            {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/UploadedFiles"),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                        dt.Add("Mensaje", "File uploaded successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        dt.Add("Mensaje", "ERROR:" + ex.Message.ToString());
+                    }
+                else
+                {
+                    dt.Add("Mensaje", "You have not specified a file.");
+                }
+            }
+            else
+            {
+                dt.Add("Mensaje", "Archivo Invalido");
+            }
+            
+            datos = JsonConvert.SerializeObject(dt, Formatting.Indented);
             return Content(datos, "application/json");
         }
+
+
+        [DllImport(@"urlmon.dll", CharSet = CharSet.Auto)]
+        private extern static System.UInt32 FindMimeFromData(System.UInt32 pBC,
+        [MarshalAs(UnmanagedType.LPStr)] System.String pwzUrl,
+        [MarshalAs(UnmanagedType.LPArray)] byte[] pBuffer,
+        System.UInt32 cbSize, [MarshalAs(UnmanagedType.LPStr)] System.String pwzMimeProposed,
+        System.UInt32 dwMimeFlags,
+        out System.UInt32 ppwzMimeOut,
+        System.UInt32 dwReserverd);
 
     }
 }

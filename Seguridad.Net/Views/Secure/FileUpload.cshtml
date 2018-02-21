@@ -42,7 +42,7 @@
             maxFilesize: 10, //in mb
             uploadMultiple: false,
             maxFiles: 2, // allowing any more than this will stress a basic php/mysql stack
-            addRemoveLinks: true,
+            addRemoveLinks: false,
             acceptedFiles: '.png,.jpg', //allowed filetypes
             dictDefaultMessage: "Upload your files here", //override the default text
             init: function () {
@@ -57,10 +57,10 @@
                     //$("#div-files").html(responseText);
                     //var _this = this;
                     //_this.removeFile(file);
-                    alert('done');
+                    alert(responseText.Mensaje);
                 });
                 this.on("addedfile", function (file) {
-                    alert('hi');
+                    //alert('hi');
                 });
             }
         };
