@@ -17,6 +17,34 @@ namespace Seguridad.Net.Controllers
 
     public class SecureController : Controller
     {
+
+        /*
+                                                              ____
+          ___                                      .-~. /_"-._
+        `-._~-.                                  / /_ "~o\  :Y
+              \  \                                / : \~x.  ` ')
+              ]  Y                              /  |  Y< ~-.__j
+             /   !                        _.--~T : l  l<  /.-~
+            /   /                 ____.--~ .   ` l /~\ \<|Y
+           /   /             .-~~"        /| .    ',-~\ \L|
+          /   /             /     .^   \ Y~Y \.^>/l_   "--'
+         /   Y           .-"(  .  l__  j_j l_/ /~_.-~    .
+        Y    l          /    \  )    ~~~." / `/"~ / \.__/l_
+        |     \     _.-"      ~-{__     l  :  l._Z~-.___.--~
+        |      ~---~           /   ~~"---\_  ' __[>
+        l  .                _.^   ___     _>-y~
+         \  \     .      .-~   .-~   ~>--"  /
+          \  ~---"            /     ./  _.-'
+           "-.,_____.,_  _.--~\     _.-~
+                       ~~     (   _}       -Row
+                              `. ~(
+                                )  \
+                          /,`--'~\--'~\
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+       */
+
+
+
         private static string liteCon = ConfigurationManager.ConnectionStrings["strCon"].ConnectionString;
         // GET: Secure
         // http://localhost:62921/Secure/TestXSS?Nombre=Robert Rozas <script>alert("XSS")</script>  Error
