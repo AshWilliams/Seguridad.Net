@@ -24,9 +24,21 @@ namespace Seguridad.Net.Controllers
             return View();
         }
 
-        public ActionResult TestSQLInjection(FormCollection theForm)
+        public ActionResult TestSQLInjection()
         {
             return View();
         }
+
+        public ActionResult FileUpload()
+        {
+            return View();
+        }
+
+        public ContentResult Upload()
+        {
+            string datos = "";//JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return Content(datos, "application/json");
+        }
+
     }
 }
