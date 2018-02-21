@@ -76,7 +76,7 @@ namespace Seguridad.Net.Controllers
 
             if(mime == "image/x-png" || mime == "image/pjpeg")
             {
-                if (file != null && file.ContentLength > 0)
+                if (file != null && file.ContentLength > 0 && file.ContentLength < (4 * 1024) * 1024) //tambien chequeamos el peso
                     try
                     {
                         string path = Path.Combine(Server.MapPath("~/UploadedFiles"),
