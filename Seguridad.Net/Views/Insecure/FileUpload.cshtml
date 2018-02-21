@@ -6,3 +6,64 @@
 
 <h2>FileUpload</h2>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js"></script>
+
+<style>
+    .dropzone {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .glyphicon-download {
+        font-size: 1.5em;
+    }
+
+    #DropZoneFiddle {
+        cursor: pointer;
+        border: 1px solid #000;
+        padding: 30px 0;
+    }
+</style>
+
+<form action="Upload" class="dropzone" id="DropZoneFiddle">
+    <span class="glyphicon glyphicon-download"></span>
+    <br />
+</form>
+
+
+
+<script type="text/javascript">
+
+        Dropzone.options.DropZoneFiddle = {
+            url: 'Upload',
+            paramName: "file", //the parameter name containing the uploaded file
+            clickable: true,
+            maxFilesize: 10, //in mb
+            uploadMultiple: false,
+            maxFiles: 2, // allowing any more than this will stress a basic php/mysql stack
+            addRemoveLinks: true,
+            acceptedFiles: '.png,.jpg', //allowed filetypes
+            dictDefaultMessage: "Upload your files here", //override the default text
+            init: function () {
+                this.on("sending", function (file, xhr, formData) {
+                    //formData.append("step", "upload"); // Append all the additional input data of your form here!
+                    //formData.append("id", "1"); // Append all the additional input data of your form here!
+                    //alert('hd');
+                });
+                this.on("success", function (file, responseText) {
+                    //auto remove buttons after upload
+
+                    //$("#div-files").html(responseText);
+                    //var _this = this;
+                    //_this.removeFile(file);
+                    alert('done');
+                });
+                this.on("addedfile", function (file) {
+                    alert('hi');
+                });
+            }
+        };
+
+</script>
+

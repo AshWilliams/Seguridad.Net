@@ -1,6 +1,9 @@
 ﻿
 
 using Microsoft.Security.Application;
+using Newtonsoft.Json;
+using System.Data;
+using System.Data.SQLite;
 using System.Web.Mvc;
 
 namespace Seguridad.Net.Controllers
@@ -24,8 +27,23 @@ namespace Seguridad.Net.Controllers
             return View();
         }
 
-        public ActionResult TestSQLInjection()
+
+        // http://localhost:62921/Secure/TestSQLInjection?Nombre='or '1' = '1
+        public ActionResult TestSQLInjection(string Nombre)
         {
+            var m_dbConnection = new SQLiteConnection("Data Source=BaseDatosSegura.sqlite;Version=3;");
+            m_dbConnection.Open();
+            var tb = new DataTable();
+            string sql = "select * from usuarios where nombre = @nombre" ;
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            command.Parameters.Add(new SQLiteParameter("nombre", Nombre));
+            SQLiteDataAdapter da = new SQLiteDataAdapter(command);
+
+            da.Fill(tb);
+
+            m_dbConnection.Close();
+
+            ViewBag.Datos = JsonConvert.SerializeObject(tb, Formatting.Indented);
             return View();
         }
 
