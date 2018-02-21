@@ -5,4 +5,20 @@
 }
 
 <h2>TestSQLInjection</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/3.1.6/footable.bootstrap.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/3.1.6/footable.min.js"></script>
+
+<table class="table" data-paging="true"></table>
+
+<script type="text/javascript">
+    $(function () {
+        $('.table').footable({
+            "columns": [
+                { "name": "nombre", "title": "Usuario" },
+                { "name": "password", "title": "Password" }
+            ],
+            "rows": @Html.Raw(ViewBag.Datos)
+        });
+    })
+</script>
 
