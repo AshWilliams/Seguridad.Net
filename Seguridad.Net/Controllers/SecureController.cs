@@ -57,6 +57,7 @@ namespace Seguridad.Net.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken()]
         public ActionResult TestCSRF()
         {
             return View();
