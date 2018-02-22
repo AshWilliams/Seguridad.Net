@@ -1,4 +1,4 @@
-python sqlmap.py -u "http://localhost:62921/Insecure/TestSQLInjection?Nombre=robert" --batch --banner --level 1
+python sqlmap.py -u "http://localhost:62921/Insecure/TestSQLInjection?Nombre=robert" --batch --banner --level 1 --flush-session
 
 
-python sqlmap.py -u "http://localhost:62921/Secure/TestSQLInjection?Nombre=robert" --batch --banner --level 5
+python sqlmap.py -u "http://localhost:62921/Secure/TestSQLInjection?Nombre=robert" --batch --banner --level 5 --flush-session

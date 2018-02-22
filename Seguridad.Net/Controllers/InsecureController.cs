@@ -67,21 +67,30 @@ namespace Seguridad.Net.Controllers
         // http://localhost:62921/Secure/TestSQLInjection?Nombre='or '1' = '1
         public ActionResult TestSQLInjection(string Nombre)
         {
-            var m_dbConnection = new SQLiteConnection("Data Source=BaseDatosSegura.sqlite;Version=3;");
-            m_dbConnection.Open();
-            var tb = new DataTable();
-            string sql = "select * from usuarios where nombre = '" + Nombre + "'";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            using (SQLiteDataReader dr = command.ExecuteReader())
+            try
             {
+                var m_dbConnection = new SQLiteConnection("Data Source=BaseDatosSegura.sqlite;Version=3;");
+                m_dbConnection.Open();
+                var tb = new DataTable();
+                string sql = "select * from usuarios where nombre = '" + Nombre + "'";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                using (SQLiteDataReader dr = command.ExecuteReader())
+                {
 
-                tb.Load(dr);
+                    tb.Load(dr);
 
+                }
+
+                m_dbConnection.Close();
+                ViewBag.Datos = JsonConvert.SerializeObject(tb, Formatting.Indented);
             }
-
-            m_dbConnection.Close();
-            ViewBag.Datos = JsonConvert.SerializeObject(tb, Formatting.Indented);
-            return View();
+            catch (Exception)
+            {
+                //do nothing and kill me
+                throw;
+            }
+            return View();   
+            
         }
 
         public ActionResult FileUpload()
