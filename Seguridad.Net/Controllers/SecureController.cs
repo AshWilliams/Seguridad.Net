@@ -2,6 +2,8 @@
 
 using Microsoft.Security.Application;
 using Newtonsoft.Json;
+using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -98,6 +100,27 @@ namespace Seguridad.Net.Controllers
             System.IntPtr mimeTypePtr = new IntPtr(mimetype);
             string mime = Marshal.PtrToStringUni(mimeTypePtr);
             Marshal.FreeCoTaskMem(mimeTypePtr);
+
+            if (file.ContentType.Equals("application/vnd.ms-excel"))
+            {
+                //es xls
+                HSSFWorkbook hssfwb;
+                Stream stream = file.InputStream;
+                hssfwb = new HSSFWorkbook(stream);
+            }
+
+            if (file.ContentType.Equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+            {
+                //es xlsx
+                XSSFWorkbook hssfwb;
+                Stream stream = file.InputStream;
+                stream.Position = 0;
+                hssfwb = new XSSFWorkbook(stream);
+            }
+           
+            
+           
+
 
 
             string datos = "";

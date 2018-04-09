@@ -43,8 +43,9 @@
             uploadMultiple: false,
             maxFiles: 2, // allowing any more than this will stress a basic php/mysql stack
             addRemoveLinks: false,
-            acceptedFiles: '.png,.jpg', //allowed filetypes
+            acceptedFiles: '.xls,.xlsx', //allowed filetypes
             dictDefaultMessage: "Upload your files here", //override the default text
+           
             init: function () {
                 this.on("sending", function (file, xhr, formData) {
                     //formData.append("step", "upload"); // Append all the additional input data of your form here!
